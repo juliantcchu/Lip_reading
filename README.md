@@ -8,4 +8,17 @@
 
 "video.py" is just a module for handling the videos
 
-All data (both training and validation) are saved in "data". "train_model.py" will directly split them into trainig data and validation data when it is training the model. 
+The original video data cannot be uploaded because of the size. However you probably won't need it to train the model cuz X.pickle and y.pickle is already here. You can just directly run "train_model.py". I'll email you the videos if you need it. 
+
+
+
+modules used:
+
+tensorflow
+keras (I don't know if it is already included in tensorflow)
+numpy
+tqdm
+cv2
+matplotlib
+pickle
+random
