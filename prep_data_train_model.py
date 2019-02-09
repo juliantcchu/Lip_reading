@@ -103,6 +103,6 @@ model.compile(loss='binary_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
 
-model.fit(X, y, batch_size=64 epochs=100, validation_split=0.1)
+model.fit(X, y, batch_size=32, epochs=100, validation_split=0.1)
 
 model.save("all_lips.h5")
