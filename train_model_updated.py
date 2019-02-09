@@ -25,14 +25,11 @@ X = X/255.0
 y = keras.utils.to_categorical(y, num_classes)
 
 model = Sequential()
-model.add(Conv3D(32, kernel_size=(3, 3, 3),
+model.add(Conv3D(64, kernel_size=(3, 3, 3),
                  activation='relu'))
-model.add(Conv3D(64, (3, 3, 3), activation='relu'))
+model.add(Conv3D(128, (3, 3, 3), activation='relu'))
 model.add(MaxPooling3D(pool_size=(2, 2, 2)))
-model.add(Dropout(0.25))
 model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
 model.compile(loss=keras.losses.categorical_crossentropy,
