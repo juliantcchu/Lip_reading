@@ -1,7 +1,8 @@
 '''
 a combination of CNN and LSTM
 
-using Conv3D to do 2D convolution in each frame twice, then feeding it into the LSTM, then the output layer
+using 3D convolution in each frame twice, then feeding it into the LSTM, then the output layer
+yet to calculate 2x2x2 maxpooling, currently using 1x2x2
 
 '''
 
@@ -38,13 +39,13 @@ y = keras.utils.to_categorical(y, num_classes)
 
 model = Sequential()
 
-model.add(Conv3D(128, (1, 3, 3), activation = "relu"))
+model.add(Conv3D(128, (3, 3, 3), activation = "relu"))
 model.add(MaxPooling3D((1, 2, 2)))
-model.add(Conv3D(128, (1, 3, 3), activation = "relu"))
+model.add(Conv3D(128, (3, 3, 3), activation = "relu"))
 model.add(MaxPooling3D((1, 2, 2)))
 
-model.add(Reshape((39, -1)))
-model.add(LSTM(128, return_sequences=True, input_shape=(39, -1)))
+model.add(Reshape((35, -1)))
+model.add(LSTM(128, return_sequences=True, input_shape=(35, -1)))
 
 model.add(Flatten())
 model.add(Dense(num_classes, activation = "softmax"))
