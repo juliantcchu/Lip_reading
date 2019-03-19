@@ -1,0 +1,53 @@
+import keras
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Flatten, Reshape
+from keras.layers import Conv3D, MaxPooling3D, Conv2D, MaxPooling2D
+from keras.layers import LSTM
+from keras import backend as K
+import numpy as np
+import pickle
+
+print("loading X and y... ")
+file = open("X_combined.pickle", "rb")
+X = pickle.load(file)
+file.close()
+file = open("y_combined.pickle", "rb")
+y = pickle.load(file)
+file.close()
+x = []
+count = 0
+for i in X:
+  x.append(np.float16(i/255.0))
+  count+=1
+X=np.array(x)
+print("X original shape: ", X.shape)
+X = X.reshape(-1, 40, 100, 100, 2)
+print("X reshaped: ", X.shape)
+
+# convert class vectors to binary class matrices
+y = keras.utils.to_categorical(y, num_classes)
+
+batch_size = 4
+num_classes = 23
+epochs = 50
+
+print("building model... ")
+model = Sequential()
+
+model.add(Conv3D(128, (3, 3, 3), activation = "relu", padding="same"))
+model.add(MaxPooling3D((1, 2, 2)))
+model.add(Conv3D(128, (3, 3, 3), activation = "relu", padding="same"))
+model.add(MaxPooling3D((1, 2, 2)))
+
+model.add(Reshape((40, -1)))
+model.add(LSTM(256, return_sequences=True, input_shape=(40, -1), recurrent_dropout=0.5))
+
+model.add(Flatten())
+model.add(Dense(num_classes, activation = "softmax"))
+
+model.compile(loss=keras.losses.categorical_crossentropy,
+              optimizer=keras.optimizers.Adam(lr=0.0001),
+              metrics=['accuracy'])
+model.fit(X, y, batch_size=batch_size, epochs=epochs, validation_split=0.1)
+model.save("LSTM_3DCNN_dotpos_raw_combined.h5")
+print("...saved!")
