@@ -1,0 +1,45 @@
+import numpy as np
+import pickle
+import random
+
+#load data
+
+file = open("X_all_t.pickle", "rb")
+X_ori = pickle.load(file)
+print(X_ori.shape)
+
+file = open("y_all_t.pickle", "rb")
+y_ori = pickle.load(file)
+
+
+# data augmentation
+def aug(ori):
+    plus = np.zeros(ori.shape, dtype=np.uint8)
+    minus = np.zeros(ori.shape, dtype=np.uint8)
+    for i in range(len(ori)):
+        for a in range(40):
+            for b in range(100):
+                for c in range(100):
+                    plus[i, a, b, c, 0] = min(ori[i, a, b, c, 0]+30, 255)
+                    plus[i, a, b, c, 0] = max(ori[i, a, b, c, 0]-30, 0)
+    return plus, minus
+                
+                
+                    
+X_plus, X_minus = aug(X_ori)
+
+X = np.concatenate((X_ori, X_plus, X_minus))
+y = y+y+y
+
+Xy = []
+for i in range(len(y)):
+    Xy.append([X[i],y[i]])
+random.shuffle(Xy)
+A = []
+B = []
+for a, b in Xy:
+    A.append(a)
+    B.append(b)
+X = A
+y = B
+
