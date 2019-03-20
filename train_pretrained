@@ -1,0 +1,21 @@
+import keras
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Flatten, Reshape
+from keras.layers import Conv3D, MaxPooling3D, Conv2D, MaxPooling2D
+from keras.layers import LSTM
+from keras import backend as K
+from keras.models import load_model
+import numpy as np
+
+batch_size = 4
+num_classes = 23
+epochs = 50
+# convert class vectors to binary class matrices
+y = keras.utils.to_categorical(y, num_classes)
+
+
+model = load_model("LSTM_CNN_pixels.h5")
+
+history model.fit(X, y, batch_size=batch_size, epochs=epochs, validation_split=0.1)
+model.save("LSTM_3DCNN_pixel_final.h5")
+print("...saved!")
