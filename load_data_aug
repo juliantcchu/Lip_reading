@@ -21,7 +21,7 @@ def aug(ori):
             for b in range(100):
                 for c in range(100):
                     plus[i, a, b, c, 0] = min(ori[i, a, b, c, 0]+30, 255)
-                    plus[i, a, b, c, 0] = max(ori[i, a, b, c, 0]-30, 0)
+                    minus[i, a, b, c, 0] = max(ori[i, a, b, c, 0]-30, 0)
     return plus, minus
                 
                 
