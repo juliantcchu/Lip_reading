@@ -17,5 +17,5 @@ y = keras.utils.to_categorical(y, num_classes)
 model = load_model("LSTM_CNN_pixels.h5")
 
 history model.fit(X, y, batch_size=batch_size, epochs=epochs, validation_split=0.1)
-model.save("LSTM_3DCNN_pixel_final.h5")
+model.save("LSTM_CNN_pixel_final.h5")
 print("...saved!")
