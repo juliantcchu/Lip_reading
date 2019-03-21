@@ -40,6 +40,6 @@ B = []
 for a, b in Xy:
     A.append(a)
     B.append(b)
-X = A
+X = np.float16(A/255)
 y = B
 
