@@ -24,3 +24,5 @@ model.compile(loss=keras.losses.categorical_crossentropy,
 
 
 model.fit(X, y, batch_size=batch_size, epochs=epochs, validation_split=0.1)
+
+model.save("3DCNN_LSTM_64kernels.h5")
