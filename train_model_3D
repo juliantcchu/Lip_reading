@@ -1,0 +1,26 @@
+import keras
+from keras.models import model_from_json
+import pickle
+import numpy as np
+
+
+epochs = 50
+batch_size = 4
+num_classes = 23
+
+file = open("X_raw_train.pickle", "rb")
+X=pickle.load(file)
+file = open("y_train.pickle", "rb")
+y=pickle.load(file)
+y = keras.utils.to_categorical(y, num_classes)
+file = open("3DCNN_LSTM_architecture.txt", "r")
+architecture = file.read()
+file.close()
+model = model_from_json(architecture)
+
+model.compile(loss=keras.losses.categorical_crossentropy,
+              optimizer=keras.optimizers.Adam(lr=0.0001),
+              metrics=['accuracy'])
+
+
+model.fit(X, y, batch_size=batch_size, epochs=epochs, validation_split=0.1)
