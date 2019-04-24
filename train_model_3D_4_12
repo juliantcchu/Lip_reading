@@ -13,6 +13,11 @@ X=pickle.load(file)
 file = open("y_train.pickle", "rb")
 y=pickle.load(file)
 y = keras.utils.to_categorical(y, num_classes)
+
+X_d = np.subtract(X, X//2)
+X_b = np.add(X, (255-X)//2)
+X = np.concatenate((X, X_d, X_b))
+
 file = open("3DCNN_LSTM_architecture.txt", "r")
 architecture = file.read()
 file.close()
