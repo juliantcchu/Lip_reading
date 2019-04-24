@@ -22,13 +22,14 @@ y = y+y+y
 
 dataset = []
 for i in range(len(y)):
-    dataset.append([X[i], y[i])
+    dataset.append([X[i], y[i]])
 random.shuffle(dataset)
 X = []
 y = []
 for a, b in dataset:
     X.append(a)
     y.append(b)
+X = np.array(X)
 
 file = open("3DCNN_LSTM_architecture.txt", "r")
 architecture = file.read()
