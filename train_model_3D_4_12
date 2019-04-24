@@ -2,6 +2,7 @@ import keras
 from keras.models import model_from_json
 import pickle
 import numpy as np
+import random
 
 
 epochs = 50
@@ -17,6 +18,17 @@ y = keras.utils.to_categorical(y, num_classes)
 X_d = np.subtract(X, X//2)
 X_b = np.add(X, (255-X)//2)
 X = np.concatenate((X, X_d, X_b))
+y = y+y+y
+
+dataset = []
+for i in range(len(y)):
+    dataset.append([X[i], y[i])
+random.shuffle(dataset)
+X = []
+y = []
+for a, b in dataset:
+    X.append(a)
+    y.append(b)
 
 file = open("3DCNN_LSTM_architecture.txt", "r")
 architecture = file.read()
