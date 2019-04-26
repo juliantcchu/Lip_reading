@@ -9,10 +9,25 @@ epochs = 50
 batch_size = 4
 num_classes = 23
 
+file = open("Combined_data_for_training.sav", "rb")
+data_2 = pickle.load(file)
+X_2 = data_2['values'].reshape(-1, 40, 100, 100, 1)
+
+def find_class(text):
+    class_names = ["ba", "bu", "en", "fu", "ge", "hao", "jia", "ke", "kou", "lu", "ma", "mi", "ni", "shi", "shi2", "shu", "ta", "tong", "wo", "xi", "xie", "yau", "yun"]
+    return class_names.index(text)
+    
+y_2 = []
+for i in data_2['target']:
+    y_2.append(find_class(i))
+
 file = open("X_raw_train.pickle", "rb")
-X=pickle.load(file)
+X_1=pickle.load(file)
 file = open("y_train.pickle", "rb")
-y=pickle.load(file)
+y_1=pickle.load(file)
+
+X = np.concatenate((X_1, X_2))
+y = y_1+y_2
 y = keras.utils.to_categorical(y, num_classes)
 
 X_d = np.subtract(X, X//2)
