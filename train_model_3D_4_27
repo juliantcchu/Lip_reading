@@ -1,5 +1,5 @@
 import keras
-from keras.models import model_from_json
+from keras.models import model_from_json, load_model
 import pickle
 import numpy as np
 import random
@@ -46,16 +46,8 @@ for a, b in dataset:
     y.append(b)
 X = np.array(X)
 
-file = open("3DCNN_LSTM_architecture.txt", "r")
-architecture = file.read()
-file.close()
-model = model_from_json(architecture)
-
-model.compile(loss=keras.losses.categorical_crossentropy,
-              optimizer=keras.optimizers.Adam(lr=0.0001),
-              metrics=['accuracy'])
-
+model = load_model("3DCNN_LSTM_64kernels.h5")
 
 model.fit(X, y, batch_size=batch_size, epochs=epochs, validation_split=0.1)
 
-model.save("3DCNN_LSTM_64kernels.h5")
+model.save("3DCNN_LSTM_64kernels_full_data.h5")
